@@ -54,3 +54,10 @@ workspace/
 
 # ── Vercel ──
 .vercel
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Vercel
+.vercel

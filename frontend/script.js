@@ -1,5 +1,5 @@
 /* exposure-scope — Frontend Logic */
-const BACKEND_URL = ''; // Set to VPS backend URL when deployed
+const API_URL = ''; // Same origin — Vercel serverless functions handle routing
 
 const resultsEl = document.getElementById('results');
 const statusEl = document.getElementById('scan-status');
@@ -43,7 +43,7 @@ async function startScan() {
     // Try backend first
     let data;
     try {
-      const resp = await fetch(`${BACKEND_URL}/api/scan`, {
+      const resp = await fetch(`/api/scan`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ target, type: detectType(target) }),
