@@ -52,28 +52,42 @@ class SpiderFootWrapper:
             "-s", target,
             "-t", sf_type,
             "-o", "json",
-            "-q"  # quiet mode
+            "-q"
         ]
 
-        process = await asyncio.create_subprocess_exec(
-            *cmd,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE
-        )
-        stdout, stderr = await asyncio.wait_for(
-            process.communicate(), timeout=300
-        )
+        try:
+            process = await asyncio.create_subprocess_exec(
+                *cmd,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE
+            )
+            stdout, stderr = await asyncio.wait_for(
+                process.communicate(), timeout=30
+            )
 
-        if process.returncode != 0:
+            if process.returncode != 0:
+                return {
+                    "tool": self.name,
+                    "status": "error",
+                    "findings": [],
+                    "error": stderr.decode()[:500]
+                }
+
+            findings = self._parse_findings(stdout.decode())
+        except asyncio.TimeoutError:
+            return {
+                "tool": self.name,
+                "status": "timeout",
+                "findings": [],
+                "error": "SpiderFoot timed out (30s)"
+            }
+        except Exception as e:
             return {
                 "tool": self.name,
                 "status": "error",
                 "findings": [],
-                "error": stderr.decode()[:500]
+                "error": str(e)
             }
-
-        # Parse findings
-        findings = self._parse_findings(stdout.decode())
 
         return {
             "tool": self.name,
