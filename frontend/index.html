@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>exposure-scope — Digital Exposure Scanner</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">🔍 exposure-scope</div>
+      <p class="tagline">See your digital shadow. Know your exposure.</p>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1>What does the internet know about you?</h1>
+        <p class="subtitle">
+          Enter an email, username, or name to scan across hundreds of data sources.
+          Find where your personal data is exposed — and fix it.
+        </p>
+      </section>
+
+      <section class="scan-form">
+        <div class="input-group">
+          <input
+            type="text"
+            id="target-input"
+            placeholder="Enter email, username, or domain..."
+            autocomplete="off"
+          />
+          <button id="scan-btn" onclick="startScan()">
+            <span id="btn-text">Scan Now</span>
+            <span id="btn-spinner" class="hidden">⟳</span>
+          </button>
+        </div>
+        <div class="examples">
+          Try: <span class="example" onclick="fillExample('john.doe@gmail.com')">email</span>
+          · <span class="example" onclick="fillExample('johndoe')">username</span>
+          · <span class="example" onclick="fillExample('example.com')">domain</span>
+        </div>
+      </section>
+
+      <section id="results" class="hidden">
+        <div class="results-header">
+          <h2>Exposure Report</h2>
+          <div class="score-display">
+            <span class="score-label">Exposure Score</span>
+            <span id="exposure-score" class="score-value">—</span>
+          </div>
+        </div>
+
+        <div class="categories">
+          <div class="category-card" id="cat-personal">
+            <h3>📋 Personal Data</h3>
+            <span class="count" id="count-personal">0</span>
+          </div>
+          <div class="category-card" id="cat-social">
+            <h3>🌐 Social Accounts</h3>
+            <span class="count" id="count-social">0</span>
+          </div>
+          <div class="category-card" id="cat-technical">
+            <h3>🖥️ Technical</h3>
+            <span class="count" id="count-technical">0</span>
+          </div>
+          <div class="category-card" id="cat-leaks">
+            <h3>⚠️ Leaks</h3>
+            <span class="count" id="count-leaks">0</span>
+          </div>
+        </div>
+
+        <div id="findings-list" class="findings"></div>
+      </section>
+
+      <section id="scan-status" class="hidden">
+        <div class="status-bar">
+          <div class="status-label">Scanning...</div>
+          <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+          <div class="status-detail" id="status-detail">Initializing tools...</div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>HUNTER OSINT Engine · NeuroTron Empire</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

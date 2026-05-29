@@ -1,0 +1,9 @@
+{
+  "name": "exposure-scope",
+  "buildCommand": null,
+  "outputDirectory": ".",
+  "routes": [
+    { "src": "/api/(.*)", "dest": "https://your-vps-backend.com/api/$1" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}

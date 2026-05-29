@@ -1,0 +1,56 @@
+# ── Secrets & Credentials ──
+.env
+.env.*
+*.env
+config.py
+**/config.py
+credentials.json
+*.pem
+*.key
+*.cert
+**/auth.lock
+
+# ── OSINT Tool Installations (VPS-specific, not part of code) ──
+backend/tools/spiderfoot/
+backend/tools/sherlock/
+backend/tools/theHarvester/
+**/tools/*/
+!**/tools/__init__.py
+!**/tools/*_wrapper.py
+
+# ── Python ──
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+.venv/
+venv/
+
+# ── Node ──
+node_modules/
+npm-debug.log*
+
+# ── IDE ──
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── OS ──
+.DS_Store
+Thumbs.db
+
+# ── VPS Specific ──
+*.session
+*.db
+*.db-shm
+*.db-wal
+logs/
+reports/
+workspace/
+
+# ── Vercel ──
+.vercel
