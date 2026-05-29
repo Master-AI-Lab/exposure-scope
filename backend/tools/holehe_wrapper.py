@@ -21,25 +21,38 @@ class HoleheWrapper:
         """Check which services an email is registered on."""
         cmd = ["holehe", target]
 
-        process = await asyncio.create_subprocess_exec(
-            *cmd,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE
-        )
-        stdout, stderr = await asyncio.wait_for(
-            process.communicate(), timeout=60
-        )
+        try:
+            process = await asyncio.create_subprocess_exec(
+                *cmd,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE
+            )
+            stdout, stderr = await asyncio.wait_for(
+                process.communicate(), timeout=30
+            )
 
-        output = stdout.decode()
-        findings = self._parse_output(output)
+            output = stdout.decode()
+            findings = self._parse_output(output)
 
-        return {
-            "tool": self.name,
-            "status": "complete",
-            "target": target,
-            "findings_count": len(findings),
-            "findings": findings,
-        }
+            return {
+                "tool": self.name,
+                "status": "complete",
+                "target": target,
+                "findings_count": len(findings),
+                "findings": findings,
+            }
+        except asyncio.TimeoutError:
+            return {
+                "tool": self.name, "status": "timeout",
+                "target": target, "findings_count": 0, "findings": [],
+                "error": "holehe timed out (30s)"
+            }
+        except Exception as e:
+            return {
+                "tool": self.name, "status": "error",
+                "target": target, "findings_count": 0, "findings": [],
+                "error": str(e)
+            }
 
     def _parse_output(self, output: str) -> List[Dict[str, Any]]:
         """Parse holehe output into structured findings."""
@@ -47,17 +60,9 @@ class HoleheWrapper:
         for line in output.split("\n"):
             line = line.strip()
             if "[+]" in line:
-                # Account exists
                 service = line.replace("[+]", "").strip()
-                findings.append({
-                    "service": service,
-                    "registered": True,
-                })
+                findings.append({"service": service, "registered": True})
             elif "[-]" in line:
-                # Account doesn't exist
                 service = line.replace("[-]", "").strip()
-                findings.append({
-                    "service": service,
-                    "registered": False,
-                })
+                findings.append({"service": service, "registered": False})
         return findings
