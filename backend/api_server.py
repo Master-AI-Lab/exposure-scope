@@ -129,4 +129,4 @@ async def run_scan(scan_id: str, target: str, target_type: str):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8115)
+    uvicorn.run(app, host="0.0.0.0", port=8115)

@@ -7,5 +7,8 @@
       "memory": 512,
       "maxDuration": 60
     }
+  },
+  "env": {
+    "VPS_BACKEND_URL": "http://srv1102669.hstgr.cloud:8115"
   }
 }

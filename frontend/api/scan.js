@@ -3,7 +3,7 @@
  * Forwards scan requests to the VPS HUNTER engine.
  */
 
-const VPS_BACKEND = process.env.VPS_BACKEND_URL || 'http://31.97.71.196:8115';
+const VPS_BACKEND = process.env.VPS_BACKEND_URL || 'http://srv1102669.hstgr.cloud:8115';
 
 export default async function handler(req, res) {
   // CORS headers
