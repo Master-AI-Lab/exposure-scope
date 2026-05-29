@@ -9,6 +9,6 @@
     }
   },
   "env": {
-    "VPS_BACKEND_URL": "http://srv1102669.hstgr.cloud:8115"
+    "VPS_BACKEND_URL": "http://31.97.71.196:8115"
   }
 }
